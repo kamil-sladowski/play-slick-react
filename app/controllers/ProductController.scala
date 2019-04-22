@@ -50,12 +50,12 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
    * This is asynchronous, since we're invoking the asynchronous methods on PersonRepository.
    */
 /*
-  def addProduct = Action.async { implicit request =>
+  def add = Action.async { implicit request =>
     Ok(views.html.addproduct())
   }
 */
 
-  def addProduct = Action.async { implicit request =>
+  def add = Action.async { implicit request =>
     // Bind the form first, then fold the result, passing a function to handle errors, and a function to handle succes.
     var a:Seq[Category] = Seq[Category]()
     val categories = categoryRepo.list().onComplete{
@@ -86,7 +86,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
   /**
    * A REST endpoint that gets all the people as JSON.
    */
-  def getProducts = Action.async { implicit request =>
+  def getAll = Action.async { implicit request =>
     productsRepo.list().map { products =>
       Ok(Json.toJson(products))
     }
