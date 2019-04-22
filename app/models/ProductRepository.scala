@@ -33,9 +33,9 @@ class ProductRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, cat
     def name = column[String]("name")
     def description = column[String]("description")
     def price = column[Int]("price")
-//    def photo = column[String]("photo")
+//    def photo = column[File]("photo")
     def amount = column[Int]("amount")
-    def category = column[Int]("category")
+    def category = column[Int]("category_id")
     def category_fk = foreignKey("cat_fk",category, categoryTable)(_.id)
 
 
@@ -47,8 +47,7 @@ class ProductRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, cat
      * In this case, we are simply passing the id, name and page parameters to the Person case classes
      * apply and unapply methods.
      */
-    def * = (id, name, description, price, amount, category) <> ((Product.apply _).tupled, Product.unapply)
-    //def * = (id, name) <> ((Category.apply _).tupled, Category.unapply)
+    def * = (id, name, price, amount, description, category) <> ((Product.apply _).tupled, Product.unapply)
   }
 
   /**
@@ -67,16 +66,16 @@ class ProductRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, cat
    * This is an asynchronous operation, it will return a future of the created person, which can be used to obtain the
    * id for that person.
    */
-  def create(name: String, description: String, price: Integer, amount:Integer, category: Int): Future[Product] = db.run {
+  def create(name: String, price: Integer, amount:Integer, description: String, category: Int): Future[Product] = db.run {
     // We create a projection of just the name and age columns, since we're not inserting a value for the id column
-    (productTable.map(p => (p.name, p.description, p.price, p.amount, p.category))
+    (productTable.map(p => (p.name, p.price, p.amount, p.description, p.category))
       // Now define it to return the id, because we want to know what id was generated for the person
       returning productTable.map(_.id)
       // And we define a transformation for the returned value, which combines our original parameters with the
       // returned id
-      into {case ((name,description, price, amount, category),id) => Product(id,name, description, price, amount, category)}
+      into {case ((name, price, amount, description, category),id) => Product(id,name, price, amount, description, category)}
     // And finally, insert the person into the database
-    ) += (name, description, price, amount, category)
+    ) += (name, price, amount, description, category)
   }
 
   /**

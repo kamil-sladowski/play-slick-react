@@ -1,7 +1,7 @@
-2019-04-22 15:41:46,096 [WARN] from slick.basic.DatabaseConfig in play-dev-mode-akka.actor.default-dispatcher-10 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
-2019-04-22 15:41:46,519 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-10 - 
+2019-04-22 19:42:06,492 [WARN] from slick.basic.DatabaseConfig in play-dev-mode-akka.actor.default-dispatcher-7 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-04-22 19:42:06,909 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-7 - 
 
-! @7bik6gbh5 - Internal server error, for (GET) [/] ->
+! @7bilc4nfj - Internal server error, for (POST) [/addproduct] ->
  
 play.api.db.evolutions.InvalidDatabaseRevision: Database 'default' needs evolution![An SQL script need to be run on your database.]
 	at play.api.db.evolutions.ApplicationEvolutions.$anonfun$runEvolutions$1(ApplicationEvolutions.scala:78)
@@ -62,10 +62,10 @@ play.api.db.evolutions.InvalidDatabaseRevision: Database 'default' needs evoluti
 	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
 	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
 	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
-2019-04-22 15:41:53,627 [ERROR] from play.api.db.evolutions.DefaultEvolutionsApi in play-dev-mode-akka.actor.default-dispatcher-6 - [SQLITE_ERROR] SQL error or missing database (table "category" already exists) [ERROR:1, SQLSTATE:null]
-2019-04-22 15:41:53,627 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-6 - 
+2019-04-22 19:42:10,865 [ERROR] from play.api.db.evolutions.DefaultEvolutionsApi in play-dev-mode-akka.actor.default-dispatcher-7 - [SQLITE_ERROR] SQL error or missing database (table "category" already exists) [ERROR:1, SQLSTATE:null]
+2019-04-22 19:42:10,866 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-7 - 
 
-! @7bik6gm8k - Internal server error, for (GET) [/@evolutions/apply/default?redirect=http%3A%2F%2Flocalhost%3A9000%2F] ->
+! @7bilc53fo - Internal server error, for (GET) [/addproduct/@evolutions/apply/default?redirect=http%3A%2F%2Flocalhost%3A9000%2Faddproduct] ->
  
 play.api.db.evolutions.InconsistentDatabase: Database 'default' is in an inconsistent state![An evolution has not been applied properly. Please check the problem and resolve it manually before marking it as resolved.]
 	at play.api.db.evolutions.DatabaseEvolutions.$anonfun$checkEvolutionsState$3(EvolutionsApi.scala:285)
@@ -107,8 +107,158 @@ play.api.db.evolutions.InconsistentDatabase: Database 'default' is in an inconsi
 	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
 	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
 	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
-2019-04-22 15:42:02,428 [WARN] from slick.basic.DatabaseConfig in play-dev-mode-akka.actor.default-dispatcher-7 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
-2019-04-22 15:42:02,529 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-7 - Application started (Dev)
-2019-04-22 15:42:04,071 [WARN] from slick.basic.DatabaseConfig in play-dev-mode-akka.actor.default-dispatcher-7 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
-2019-04-22 15:42:04,155 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-7 - Application started (Dev)
-2019-04-22 16:05:48,568 [WARN] from com.zaxxer.hikari.pool.HikariPool in db housekeeper - db - Thread starvation or clock leap detected (housekeeper delta=21m44s392ms929µs836ns).
+2019-04-22 19:42:14,209 [WARN] from slick.basic.DatabaseConfig in play-dev-mode-akka.actor.default-dispatcher-3 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-04-22 19:42:14,349 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-3 - Application started (Dev)
+2019-04-22 19:42:15,673 [WARN] from slick.basic.DatabaseConfig in play-dev-mode-akka.actor.default-dispatcher-8 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-04-22 19:42:15,708 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-8 - Application started (Dev)
+2019-04-22 19:42:29,283 [ERROR] from application in application-akka.actor.default-dispatcher-4 - 
+
+! @7bilc64m8 - Internal server error, for (POST) [/addproduct] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[SQLiteException: [SQLITE_ERROR] SQL error or missing database (table product has no column named category)]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:251)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:178)
+	at play.core.server.AkkaHttpServer$$anonfun$1.applyOrElse(AkkaHttpServer.scala:363)
+	at play.core.server.AkkaHttpServer$$anonfun$1.applyOrElse(AkkaHttpServer.scala:361)
+	at scala.concurrent.Future.$anonfun$recoverWith$1(Future.scala:413)
+	at scala.concurrent.impl.Promise.$anonfun$transformWith$1(Promise.scala:37)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:60)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:55)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:91)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:12)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:81)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:91)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:43)
+	at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table product has no column named category)
+	at org.sqlite.core.DB.newSQLException(DB.java:909)
+	at org.sqlite.core.DB.newSQLException(DB.java:921)
+	at org.sqlite.core.DB.throwex(DB.java:886)
+	at org.sqlite.core.NativeDB.prepare_utf8(Native Method)
+	at org.sqlite.core.NativeDB.prepare(NativeDB.java:127)
+	at org.sqlite.core.DB.prepare(DB.java:227)
+	at org.sqlite.core.CorePreparedStatement.<init>(CorePreparedStatement.java:41)
+	at org.sqlite.jdbc3.JDBC3PreparedStatement.<init>(JDBC3PreparedStatement.java:30)
+	at org.sqlite.jdbc4.JDBC4PreparedStatement.<init>(JDBC4PreparedStatement.java:19)
+	at org.sqlite.jdbc4.JDBC4Connection.prepareStatement(JDBC4Connection.java:48)
+	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:263)
+	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:235)
+	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:256)
+	at com.zaxxer.hikari.pool.ProxyConnection.prepareStatement(ProxyConnection.java:345)
+	at com.zaxxer.hikari.pool.HikariProxyConnection.prepareStatement(HikariProxyConnection.java)
+	at slick.jdbc.JdbcBackend$SessionDef.prepareInsertStatement(JdbcBackend.scala:336)
+	at slick.jdbc.JdbcBackend$SessionDef.prepareInsertStatement$(JdbcBackend.scala:333)
+	at slick.jdbc.JdbcBackend$BaseSession.prepareInsertStatement(JdbcBackend.scala:433)
+	at slick.jdbc.JdbcBackend$SessionDef.withPreparedInsertStatement(JdbcBackend.scala:377)
+	at slick.jdbc.JdbcBackend$SessionDef.withPreparedInsertStatement$(JdbcBackend.scala:375)
+	at slick.jdbc.JdbcBackend$BaseSession.withPreparedInsertStatement(JdbcBackend.scala:433)
+	at slick.jdbc.JdbcActionComponent$ReturningInsertActionComposerImpl.preparedInsert(JdbcActionComponent.scala:638)
+	at slick.jdbc.JdbcActionComponent$InsertActionComposerImpl$SingleInsertAction.run(JdbcActionComponent.scala:506)
+	at slick.jdbc.JdbcActionComponent$SimpleJdbcProfileAction.run(JdbcActionComponent.scala:29)
+	at slick.jdbc.JdbcActionComponent$SimpleJdbcProfileAction.run(JdbcActionComponent.scala:26)
+	at slick.basic.BasicBackend$DatabaseDef$$anon$2.liftedTree1$1(BasicBackend.scala:242)
+	at slick.basic.BasicBackend$DatabaseDef$$anon$2.run(BasicBackend.scala:242)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2019-04-22 19:45:40,910 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-10 - 
+
+! @7bilch27p - Internal server error, for (GET) [/] ->
+ 
+play.sbt.PlayExceptions$CompilationException: Compilation error[type mismatch;
+ found   : (String, String, Int, Int, Int) => controllers.CreateProductForm
+ required: (String, Int, Int, String, Int) => ?]
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at scala.Option.map(Option.scala:146)
+	at play.sbt.run.PlayReload$.$anonfun$taskFailureHandler$1(PlayReload.scala:33)
+	at scala.Option.map(Option.scala:146)
+	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:28)
+	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:24)
+	at play.sbt.run.PlayReload$.$anonfun$compile$3(PlayReload.scala:51)
+	at scala.util.Either$LeftProjection.map(Either.scala:573)
+	at play.sbt.run.PlayReload$.compile(PlayReload.scala:51)
+	at play.sbt.run.PlayRun$.$anonfun$playRunTask$4(PlayRun.scala:76)
+	at play.runsupport.Reloader.$anonfun$reload$1(Reloader.scala:412)
+	at play.runsupport.Reloader$$anon$5.run(Reloader.scala:50)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:55)
+	at play.runsupport.Reloader.reload(Reloader.scala:412)
+	at play.core.server.DevServerStart$$anon$1.get(DevServerStart.scala:123)
+	at play.core.server.AkkaHttpServer.handleRequest(AkkaHttpServer.scala:222)
+	at play.core.server.AkkaHttpServer.$anonfun$createServerBinding$1(AkkaHttpServer.scala:137)
+	at akka.stream.impl.fusing.MapAsync$$anon$25.onPush(Ops.scala:1194)
+	at akka.stream.impl.fusing.GraphInterpreter.processPush(GraphInterpreter.scala:519)
+	at akka.stream.impl.fusing.GraphInterpreter.processEvent(GraphInterpreter.scala:482)
+	at akka.stream.impl.fusing.GraphInterpreter.execute(GraphInterpreter.scala:378)
+	at akka.stream.impl.fusing.GraphInterpreterShell.runBatch(ActorGraphInterpreter.scala:585)
+	at akka.stream.impl.fusing.GraphInterpreterShell$AsyncInput.execute(ActorGraphInterpreter.scala:469)
+	at akka.stream.impl.fusing.GraphInterpreterShell.processEvent(ActorGraphInterpreter.scala:560)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.akka$stream$impl$fusing$ActorGraphInterpreter$$processEvent(ActorGraphInterpreter.scala:742)
+	at akka.stream.impl.fusing.ActorGraphInterpreter$$anonfun$receive$1.applyOrElse(ActorGraphInterpreter.scala:757)
+	at akka.actor.Actor.aroundReceive(Actor.scala:517)
+	at akka.actor.Actor.aroundReceive$(Actor.scala:515)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.aroundReceive(ActorGraphInterpreter.scala:667)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:590)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:559)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2019-04-22 20:27:54,276 [WARN] from com.zaxxer.hikari.pool.HikariPool in db housekeeper - db - Thread starvation or clock leap detected (housekeeper delta=38m38s489ms759µs505ns).
+2019-04-22 20:29:32,678 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-10 - 
+
+! @7bilialca - Internal server error, for (GET) [/] ->
+ 
+play.sbt.PlayExceptions$CompilationException: Compilation error[type mismatch;
+ found   : (String, String, Int, Int, Int) => controllers.CreateProductForm
+ required: (String, Int, Int, String, Int) => ?]
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:34)
+	at scala.Option.map(Option.scala:146)
+	at play.sbt.run.PlayReload$.$anonfun$taskFailureHandler$1(PlayReload.scala:33)
+	at scala.Option.map(Option.scala:146)
+	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:28)
+	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:24)
+	at play.sbt.run.PlayReload$.$anonfun$compile$3(PlayReload.scala:51)
+	at scala.util.Either$LeftProjection.map(Either.scala:573)
+	at play.sbt.run.PlayReload$.compile(PlayReload.scala:51)
+	at play.sbt.run.PlayRun$.$anonfun$playRunTask$4(PlayRun.scala:76)
+	at play.runsupport.Reloader.$anonfun$reload$1(Reloader.scala:412)
+	at play.runsupport.Reloader$$anon$5.run(Reloader.scala:50)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:55)
+	at play.runsupport.Reloader.reload(Reloader.scala:412)
+	at play.core.server.DevServerStart$$anon$1.get(DevServerStart.scala:123)
+	at play.core.server.AkkaHttpServer.handleRequest(AkkaHttpServer.scala:222)
+	at play.core.server.AkkaHttpServer.$anonfun$createServerBinding$1(AkkaHttpServer.scala:137)
+	at akka.stream.impl.fusing.MapAsync$$anon$25.onPush(Ops.scala:1194)
+	at akka.stream.impl.fusing.GraphInterpreter.processPush(GraphInterpreter.scala:519)
+	at akka.stream.impl.fusing.GraphInterpreter.processEvent(GraphInterpreter.scala:482)
+	at akka.stream.impl.fusing.GraphInterpreter.execute(GraphInterpreter.scala:378)
+	at akka.stream.impl.fusing.GraphInterpreterShell.runBatch(ActorGraphInterpreter.scala:585)
+	at akka.stream.impl.fusing.GraphInterpreterShell$AsyncInput.execute(ActorGraphInterpreter.scala:469)
+	at akka.stream.impl.fusing.GraphInterpreterShell.processEvent(ActorGraphInterpreter.scala:560)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.akka$stream$impl$fusing$ActorGraphInterpreter$$processEvent(ActorGraphInterpreter.scala:742)
+	at akka.stream.impl.fusing.ActorGraphInterpreter$$anonfun$receive$1.applyOrElse(ActorGraphInterpreter.scala:757)
+	at akka.actor.Actor.aroundReceive(Actor.scala:517)
+	at akka.actor.Actor.aroundReceive$(Actor.scala:515)
+	at akka.stream.impl.fusing.ActorGraphInterpreter.aroundReceive(ActorGraphInterpreter.scala:667)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:590)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:559)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2019-04-22 20:34:59,157 [WARN] from slick.basic.DatabaseConfig in play-dev-mode-akka.actor.default-dispatcher-23 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-04-22 20:34:59,183 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-23 - Application started (Dev)

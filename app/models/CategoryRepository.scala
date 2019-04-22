@@ -33,7 +33,7 @@ class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(im
   def create(name: String, description: String): Future[Category] = db.run {
     (category.map(c => (c.name, c.description))
       returning category.map(_.id)
-      into {case ((name,description),id) => Product(id,name, description)}
+      into {case ((name,description),id) => Category(id,name, description)}
       ) += (name, description)
   }
 

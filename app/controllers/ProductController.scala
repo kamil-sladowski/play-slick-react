@@ -23,8 +23,10 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
   val productForm: Form[CreateProductForm] = Form {
     mapping(
       "name" -> nonEmptyText,
+      "price" -> number,
+      "amount" -> number,
       "description" -> nonEmptyText,
-      "category" -> number,
+      "category_id" -> number,
     )(CreateProductForm.apply)(CreateProductForm.unapply)
   }
 
@@ -72,7 +74,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
       },
       // There were no errors in the from, so create the person.
       product => {
-        productsRepo.create(product.name, product.description, product.category).map { _ =>
+        productsRepo.create(product.name, product.price, product.amount, product.description, product.category_id).map { _ =>
           // If successful, we simply redirect to the index page.
           Redirect(routes.ProductController.index).flashing("success" -> "product.created")
         }
@@ -107,8 +109,11 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
   def handlePost = Action.async { implicit request =>
     val name = request.body.asJson.get("name").as[String]
     val desc = request.body.asJson.get("description").as[String]
+    val pric = request.body.asJson.get("price").as[Int]
+    val amoun = request.body.asJson.get("amount").as[Int]
+    val categ = 1
 
-    productsRepo.create(name,desc,1).map { product =>
+    productsRepo.create(name, pric, amoun, desc, categ).map { product =>
       Ok(Json.toJson(product))
     }
   }
@@ -124,4 +129,4 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
  * in a different way to your models.  In this case, it doesn't make sense to have an id parameter in the form, since
  * that is generated once it's created.
  */
-case class CreateProductForm(name: String, description: String, category: Int)
+case class CreateProductForm(name: String, price:Int, amount:Int, description: String, category_id: Int)
