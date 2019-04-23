@@ -6,19 +6,15 @@ GET     /                           controllers.ProductController.index
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /products                   controllers.ProductsController.getAll
-POST    /product                    controllers.ProductsController.add
-GET     /product/:id                controllers.ProductsController.getById(id: Integer)
-PUT     /product/:id                controllers.ProductsController.update(id: Integer)
+GET     /products                   controllers.ProductController.getAll
+POST    /product                    controllers.ProductController.add
+GET     /product/:id                controllers.ProductController.getById(id: Integer)
+PUT     /product/:id                controllers.ProductController.update(id: Integer)
 
 GET     /categories                 controllers.CategoryController.getAll
 POST    /category                   controllers.CategoryController.add
 GET     /category/:id               controllers.CategoryController.getById(id: Integer)
 PUT     /category/:id               controllers.CategoryController.update(id: Integer)
-
-POST    /password                   controllers.PasswordsController.add
-GET     /password/:id               controllers.PasswordsController.getById(id: Integer)
-PUT     /password/:id               controllers.PasswordsController.update(id: Integer)
 
 GET     /purchases                  controllers.PurchaseController.getAll
 POST    /purchase                   controllers.PurchaseController.add

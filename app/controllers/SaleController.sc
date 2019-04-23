@@ -49,4 +49,4 @@ class SaleController @Inject()(salesRepo: SaleRepository,
 
 }
 
-case class CreateSaleForm(name: String)
+case class CreateSaleForm(name: String, product_id: Int, price: Int, start: String, end: String, amount: Int)

@@ -45,4 +45,4 @@ class CategoryController @Inject()(categoriesRepo: CategoryRepository,
 
 }
 
-case class CreateCategoryForm(name: String)
+case class CreateCategoryForm(name: String, description: String)

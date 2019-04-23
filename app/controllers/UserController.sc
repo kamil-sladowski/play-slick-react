@@ -53,4 +53,5 @@ class UserController @Inject()(usersRepo: UserRepository,
 
 }
 
-case class CreateUserForm(name: String)
+case class CreateUserForm(name: String, email: String, phone: Int, postal: String,
+                          country: String, city: String, street: String, home_number: Int, flat_number: Int)

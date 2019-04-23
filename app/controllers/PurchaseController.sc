@@ -48,4 +48,4 @@ class PurchaseController @Inject()(purchasesRepo: PurchaseRepository,
 
 }
 
-case class CreatePurchaseForm(name: String)
+case class CreatePurchaseForm(name: String, user_id: Int, product_id: Int, date: String, amount: Int)

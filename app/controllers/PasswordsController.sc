@@ -12,21 +12,21 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class CategoryController @Inject()(categoriesRepo: CategoryRepository,
+class PasswordController @Inject()(categoriesRepo: PasswordRepository,
                                    cc: MessagesControllerComponents
                                   )(implicit ec: ExecutionContext)
   extends MessagesAbstractController(cc) {
 
 
-  val categorieForm: Form[CreateCategoryForm] = Form {
+  val categorieForm: Form[CreatePasswordForm] = Form {
     mapping(
       "name" -> nonEmptyText,
       "password" -> nonEmptyText,
-    )(CreateCategoryForm.apply)(CreateCategoryForm.unapply)
+    )(CreatePasswordForm.apply)(CreatePasswordForm.unapply)
   }
 
 
-  def getById(id: String) = Action { Ok("") }
+  def getByName(id: String) = Action { Ok("") }
 
   def add = Action { Ok("") }
 
@@ -43,4 +43,4 @@ class CategoryController @Inject()(categoriesRepo: CategoryRepository,
 
 }
 
-case class CreateCategoryForm(name: String)
+case class CreatePasswordForm(name: String, password:String)
