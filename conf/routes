@@ -33,7 +33,7 @@ GET     /user/:id                controllers.UserController.getById(id: Integer)
 PUT     /user/:id                controllers.UserController.update(id: Integer)
 POST    /login                   controllers.UserController.login
 
-GET     /saless                  controllers.SaleController.getAll
+GET     /sales                   controllers.SaleController.getAll
 POST    /sales                   controllers.SaleController.add
 GET     /sales/:id               controllers.SaleController.getById(id: Integer)
 PUT     /sales/:id               controllers.SaleController.update(id: Integer)

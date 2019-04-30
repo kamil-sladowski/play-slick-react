@@ -3,7 +3,6 @@ package models
 import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
-
 import scala.concurrent.{ Future, ExecutionContext }
 
 /**
@@ -12,11 +11,14 @@ import scala.concurrent.{ Future, ExecutionContext }
   * @param dbConfigProvider The Play db config provider. Play will inject this for you.
   */
 @Singleton
-class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)
+                                   (implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
+
+  private val categoryTable = TableQuery[CategoryTable]
 
   class CategoryTable(tag: Tag) extends Table[Category](tag, "category") {
 

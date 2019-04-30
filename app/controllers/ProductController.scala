@@ -12,14 +12,13 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo: CategoryRepository,
+class ProductController @Inject()(productsRepo: ProductRepository,
+                                  categoryRepo: CategoryRepository,
                                   cc: MessagesControllerComponents
                                 )(implicit ec: ExecutionContext)
   extends MessagesAbstractController(cc) {
 
-  /**
-   * The mapping for the person form.
-   */
+
   val productForm: Form[CreateProductForm] = Form {
     mapping(
       "name" -> nonEmptyText,
@@ -30,9 +29,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
     )(CreateProductForm.apply)(CreateProductForm.unapply)
   }
 
-  /**
-   * The index action.
-   */
+
   def index = Action.async { implicit request =>
     val categories = categoryRepo.list()
     categories.map(cat => Ok(views.html.index(productForm,cat)))
@@ -44,16 +41,12 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
     }*/
   }
 
-  /**
-   * The add person action.
-   *
-   * This is asynchronous, since we're invoking the asynchronous methods on PersonRepository.
-   */
-/*
-  def add = Action.async { implicit request =>
-    Ok(views.html.addproduct())
-  }
-*/
+
+
+//  def add = Action.async { implicit request =>
+//    Ok(views.html.addproduct())
+//  }
+
 
   def add = Action.async { implicit request =>
     // Bind the form first, then fold the result, passing a function to handle errors, and a function to handle succes.
@@ -83,9 +76,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
   }
 
 
-  /**
-   * A REST endpoint that gets all the people as JSON.
-   */
+
   def getAll = Action.async { implicit request =>
     productsRepo.list().map { products =>
       Ok(Json.toJson(products))
@@ -118,15 +109,136 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
     }
   }
 
+  def getById(id: Integer) = Action { Ok("") }
 
+  def update(id: Integer) = Action { Ok("") }
+}
+
+case class CreateProductForm(name: String, price:Int, amount:Int, description: String, category_id: Int)
+
+
+
+
+
+class CategoryController @Inject()(categoriesRepo: CategoryRepository,
+                                   cc: MessagesControllerComponents
+                                  )(implicit ec: ExecutionContext)
+  extends MessagesAbstractController(cc) {
+
+
+  val categorieForm: Form[CreateCategoryForm] = Form {
+    mapping(
+      "name" -> nonEmptyText,
+      "description" -> nonEmptyText,
+    )(CreateCategoryForm.apply)(CreateCategoryForm.unapply)
+  }
+
+
+  def getAll = Action { Ok("") }
+
+  def getById(id: Integer) = Action { Ok("") }
+
+  def add = Action { Ok("") }
+
+  def update(id: Integer) = Action { Ok("") }
+
+
+  def handlePost = Action.async { implicit request =>
+    val name = request.body.asJson.get("name").as[String]
+    val description = request.body.asJson.get("description").as[String]
+
+    categoriesRepo.create(name, description ).map { categorie =>
+      Ok(Json.toJson(categorie))
+    }
+  }
 
 }
 
-/**
- * The create person form.
- *
- * Generally for forms, you should define separate objects to your models, since forms very often need to present data
- * in a different way to your models.  In this case, it doesn't make sense to have an id parameter in the form, since
- * that is generated once it's created.
- */
-case class CreateProductForm(name: String, price:Int, amount:Int, description: String, category_id: Int)
+case class CreateCategoryForm(name: String, description: String)
+
+
+  class PurchaseController @Inject()(purchasesRepo: PurchaseRepository,
+                                     cc: MessagesControllerComponents
+                                    )(implicit ec: ExecutionContext)
+    extends MessagesAbstractController(cc) {
+
+
+    val purchaseForm: Form[CreatePurchaseForm] = Form {
+      mapping(
+        "name" -> nonEmptyText,
+        "user_id" -> number,
+        "product_id" -> number,
+        "date" -> nonEmptyText,
+        "amount" -> number,
+      )(CreatePurchaseForm.apply)(CreatePurchaseForm.unapply)
+    }
+
+
+    def getAll = Action { Ok("") }
+
+    def getById(id: Integer) = Action { Ok("") }
+
+    def add = Action { Ok("") }
+
+    def update(id: Integer) = Action { Ok("") }
+
+
+    def handlePost = Action.async { implicit request =>
+      val user_id = request.body.asJson.get("user_id").as[Int]
+      val product_id = request.body.asJson.get("product_id").as[Int]
+      val date = request.body.asJson.get("date").as[String]
+      val amount = request.body.asJson.get("amount").as[Int]
+
+
+      purchasesRepo.create(user_id, product_id, date, amount).map { purchase =>
+        Ok(Json.toJson(purchase))
+      }
+    }
+
+  }
+
+  case class CreatePurchaseForm(name: String, user_id: Int, product_id: Int, date: String, amount: Int)
+
+
+class SaleController @Inject()(salesRepo: SaleRepository,
+                               cc: MessagesControllerComponents
+                              )(implicit ec: ExecutionContext)
+  extends MessagesAbstractController(cc) {
+
+
+  val saleForm: Form[CreateSaleForm] = Form {
+    mapping(
+      "name" -> nonEmptyText,
+      "product_id" -> number,
+      "price" -> number,
+      "start" -> nonEmptyText,
+      "end" -> nonEmptyText,
+      "amount" -> number,
+    )(CreateSaleForm.apply)(CreateSaleForm.unapply)
+  }
+
+
+  def getAll = Action { Ok("") }
+
+  def getById(id: Integer) = Action { Ok("") }
+
+  def add = Action { Ok("") }
+
+  def update(id: Integer) = Action { Ok("") }
+
+
+  def handlePost = Action.async { implicit request =>
+    val product_id = request.body.asJson.get("product_id").as[Int]
+    val price = request.body.asJson.get("price").as[Int]
+    val start = request.body.asJson.get("start").as[String]
+    val end = request.body.asJson.get("end").as[String]
+    val amount = request.body.asJson.get("amount").as[Int]
+
+    salesRepo.create(product_id, price, start, end, amount).map { sale =>
+      Ok(Json.toJson(sale))
+    }
+  }
+
+}
+
+case class CreateSaleForm(name: String, product_id: Int, price: Int, start: String, end: String, amount: Int)

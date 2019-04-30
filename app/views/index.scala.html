@@ -7,7 +7,7 @@
 }
 
 @main("Welcome to Ebiznes") {
-  @form(routes.ProductController.addProduct()) {
+  @form(routes.ProductController.add()) {
 		@inputText(product("name"))
 		@inputText(product("description"))
 		@inputText(product("price"))
