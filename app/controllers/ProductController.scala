@@ -242,3 +242,102 @@ class SaleController @Inject()(salesRepo: SaleRepository,
 }
 
 case class CreateSaleForm(name: String, product_id: Int, price: Int, start: String, end: String, amount: Int)
+
+
+
+
+
+class AdminController @Inject()(adminsRepo: AdminRepository,
+                                cc: MessagesControllerComponents
+                               )(implicit ec: ExecutionContext)
+  extends MessagesAbstractController(cc) {
+
+
+  val adminForm: Form[CreateAdminForm] = Form {
+    mapping(
+      "name" -> nonEmptyText,
+    )(CreateAdminForm.apply)(CreateAdminForm.unapply)
+  }
+
+
+  def getAll = Action { Ok("") }
+
+  def getById(id: Integer) = Action { Ok("") }
+
+  def add = Action { Ok("") }
+
+  def login = Action { Ok("") }
+
+  def register = Action { Ok("") }
+
+  def update(id: Integer) = Action { Ok("") }
+
+
+  def handlePost = Action.async { implicit request =>
+    val name = request.body.asJson.get("name").as[String]
+
+    adminsRepo.create(name).map { admin =>
+      Ok(Json.toJson(admin))
+    }
+  }
+
+}
+
+case class CreateAdminForm(name: String)
+
+
+
+
+
+class UserController @Inject()(usersRepo: UserRepository,
+                               cc: MessagesControllerComponents
+                              )(implicit ec: ExecutionContext)
+  extends MessagesAbstractController(cc) {
+
+
+  val userForm: Form[CreateUserForm] = Form {
+    mapping(
+      "name" -> nonEmptyText,
+      "email" -> nonEmptyText,
+      "phone" -> number,
+      "postal" -> nonEmptyText,
+      "country" -> nonEmptyText,
+      "city" -> nonEmptyText,
+      "street" -> nonEmptyText,
+      "home_number" -> number,
+      "flat_number" -> number,
+    )(CreateUserForm.apply)(CreateUserForm.unapply)
+  }
+
+
+  def getAll = Action { Ok("") }
+
+  def getById(id: Integer) = Action { Ok("") }
+
+  def register = Action { Ok("") }
+  def login = Action { Ok("") }
+
+  def update(id: Integer) = Action { Ok("") }
+
+
+  def handlePost = Action.async { implicit request =>
+    val name = request.body.asJson.get("name").as[String]
+    val email = request.body.asJson.get("email").as[String]
+    val phone = request.body.asJson.get("phone").as[Int]
+    val postal = request.body.asJson.get("postal").as[String]
+    val country = request.body.asJson.get("country").as[String]
+    val city = request.body.asJson.get("city").as[String]
+    val street = request.body.asJson.get("street").as[String]
+    val home_number = request.body.asJson.get("home_number").as[Int]
+    val flat_number = request.body.asJson.get("flat_number").as[Int]
+
+
+    usersRepo.create(name, email, phone, postal, country, city, street, home_number,flat_number).map { user =>
+      Ok(Json.toJson(user))
+    }
+  }
+
+}
+
+case class CreateUserForm(name: String, email: String, phone: Int, postal: String,
+                          country: String, city: String, street: String, home_number: Int, flat_number: Int)
