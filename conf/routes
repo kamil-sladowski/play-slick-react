@@ -8,33 +8,33 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET     /products                   controllers.ProductController.getAll
 POST    /product                    controllers.ProductController.add
-GET     /product/:id                controllers.ProductController.getById(id: Integer)
-PUT     /product/:id                controllers.ProductController.update(id: Integer)
+GET     /product/:id                controllers.ProductController.getById(id: Int)
+PUT     /product/:id                controllers.ProductController.update(id: Int)
 
 GET     /categories                 controllers.CategoryController.getAll
 POST    /category                   controllers.CategoryController.add
-GET     /category/:id               controllers.CategoryController.getById(id: Integer)
-PUT     /category/:id               controllers.CategoryController.update(id: Integer)
+GET     /category/:id               controllers.CategoryController.getById(id: Int)
+PUT     /category/:id               controllers.CategoryController.update(id: Int)
 
 GET     /purchases                  controllers.PurchaseController.getAll
 POST    /purchase                   controllers.PurchaseController.add
-GET     /purchase/:id               controllers.PurchaseController.getById(id: Integer)
-PUT     /purchase/:id               controllers.PurchaseController.update(id: Integer)
+GET     /purchase/:id               controllers.PurchaseController.getById(id: Int)
+PUT     /purchase/:id               controllers.PurchaseController.update(id: Int)
 
 GET     /admins                  controllers.AdminController.getAll
 POST    /register_admin          controllers.AdminController.register
-GET     /admin/:id               controllers.AdminController.getById(id: Integer)
-PUT     /admin/:id               controllers.AdminController.update(id: Integer)
+GET     /admin/:id               controllers.AdminController.getById(id: Int)
+PUT     /admin/:id               controllers.AdminController.update(id: Int)
 POST    /login                   controllers.AdminController.login
 
 GET     /users                   controllers.UserController.getAll
 POST    /register_user           controllers.UserController.register
-GET     /user/:id                controllers.UserController.getById(id: Integer)
-PUT     /user/:id                controllers.UserController.update(id: Integer)
+GET     /user/:id                controllers.UserController.getById(id: Int)
+PUT     /user/:id                controllers.UserController.update(id: Int)
 POST    /login                   controllers.UserController.login
 
 GET     /sales                   controllers.SaleController.getAll
 POST    /sales                   controllers.SaleController.add
-GET     /sales/:id               controllers.SaleController.getById(id: Integer)
-PUT     /sales/:id               controllers.SaleController.update(id: Integer)
+GET     /sales/:id               controllers.SaleController.getById(id: Int)
+PUT     /sales/:id               controllers.SaleController.update(id: Int)
 

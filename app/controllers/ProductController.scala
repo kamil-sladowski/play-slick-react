@@ -15,7 +15,7 @@ import scala.util.{Failure, Success}
 class ProductController @Inject()(productsRepo: ProductRepository,
                                   categoryRepo: CategoryRepository,
                                   cc: MessagesControllerComponents
-                                )(implicit ec: ExecutionContext)
+                                 )(implicit ec: ExecutionContext)
   extends MessagesAbstractController(cc) {
 
 
@@ -34,18 +34,18 @@ class ProductController @Inject()(productsRepo: ProductRepository,
     val categories = categoryRepo.list()
     categories.map(cat => Ok(views.html.index(productForm,cat)))
 
-      /*
-      .onComplete{
-      case Success(categories) => Ok(views.html.index(productForm,categories))
-      case Failure(t) => print("")
-    }*/
+    /*
+    .onComplete{
+    case Success(categories) => Ok(views.html.index(productForm,categories))
+    case Failure(t) => print("")
+  }*/
   }
 
 
 
-//  def add = Action.async { implicit request =>
-//    Ok(views.html.addproduct())
-//  }
+  //  def add = Action.async { implicit request =>
+  //    Ok(views.html.addproduct())
+  //  }
 
 
   def add = Action.async { implicit request =>
@@ -62,8 +62,8 @@ class ProductController @Inject()(productsRepo: ProductRepository,
       // a future because the person creation function returns a future.
       errorForm => {
         Future.successful(
-            Ok(views.html.index(errorForm,a))
-          )
+          Ok(views.html.index(errorForm,a))
+        )
       },
       // There were no errors in the from, so create the person.
       product => {
@@ -83,19 +83,6 @@ class ProductController @Inject()(productsRepo: ProductRepository,
     }
   }
 
-  def getByCategory(id: Integer) = Action.async { implicit  request =>
-    productsRepo.getByCategory(id).map { products =>
-      Ok(Json.toJson(products))
-    }
-  }
-
-  def getByCategories = Action.async { implicit  request =>
-    val categories: List[Int] = List(1,2,3)
-
-    productsRepo.getByCategories(categories).map { products =>
-      Ok(Json.toJson(products))
-    }
-  }
 
   def handlePost = Action.async { implicit request =>
     val name = request.body.asJson.get("name").as[String]
@@ -109,9 +96,14 @@ class ProductController @Inject()(productsRepo: ProductRepository,
     }
   }
 
-  def getById(id: Integer) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit  request =>
+    productsRepo.getByID(id).map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def update(id: Integer) = Action { Ok("") }
+
+  def update(id: Long) = Action { Ok("") }
 }
 
 case class CreateProductForm(name: String, price:Int, amount:Int, description: String, category_id: Int)
@@ -134,13 +126,35 @@ class CategoryController @Inject()(categoriesRepo: CategoryRepository,
   }
 
 
-  def getAll = Action { Ok("") }
+  def getAll = Action.async { implicit request =>
+    categoriesRepo.list().map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def getById(id: Integer) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit  request =>
+    categoriesRepo.getByID(id).map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def add = Action { Ok("") }
+  def add = Action.async { implicit request =>
 
-  def update(id: Integer) = Action { Ok("") }
+    categorieForm.bindFromRequest.fold(
+      errorForm => {
+        Future.successful(
+          Ok("Error add purchase")
+        )
+      },
+      category => {
+        categoriesRepo.create(category.name, category.description).map { _ =>
+          Redirect(routes.ProductController.index).flashing("success" -> "product.created")
+        }
+      }
+    )
+  }
+
+  def update(id: Long) = Action { Ok("") }
 
 
   def handlePost = Action.async { implicit request =>
@@ -157,47 +171,71 @@ class CategoryController @Inject()(categoriesRepo: CategoryRepository,
 case class CreateCategoryForm(name: String, description: String)
 
 
-  class PurchaseController @Inject()(purchasesRepo: PurchaseRepository,
-                                     cc: MessagesControllerComponents
-                                    )(implicit ec: ExecutionContext)
-    extends MessagesAbstractController(cc) {
+class PurchaseController @Inject()(purchasesRepo: PurchaseRepository,
+                                   cc: MessagesControllerComponents
+                                  )(implicit ec: ExecutionContext)
+  extends MessagesAbstractController(cc) {
 
 
-    val purchaseForm: Form[CreatePurchaseForm] = Form {
-      mapping(
-        "name" -> nonEmptyText,
-        "user_id" -> number,
-        "product_id" -> number,
-        "date" -> nonEmptyText,
-        "amount" -> number,
-      )(CreatePurchaseForm.apply)(CreatePurchaseForm.unapply)
-    }
-
-
-    def getAll = Action { Ok("") }
-
-    def getById(id: Integer) = Action { Ok("") }
-
-    def add = Action { Ok("") }
-
-    def update(id: Integer) = Action { Ok("") }
-
-
-    def handlePost = Action.async { implicit request =>
-      val user_id = request.body.asJson.get("user_id").as[Int]
-      val product_id = request.body.asJson.get("product_id").as[Int]
-      val date = request.body.asJson.get("date").as[String]
-      val amount = request.body.asJson.get("amount").as[Int]
-
-
-      purchasesRepo.create(user_id, product_id, date, amount).map { purchase =>
-        Ok(Json.toJson(purchase))
-      }
-    }
-
+  val purchaseForm: Form[CreatePurchaseForm] = Form {
+    mapping(
+      "name" -> nonEmptyText,
+      "user_id" -> number,
+      "product_id" -> number,
+      "date" -> nonEmptyText,
+      "amount" -> number,
+    )(CreatePurchaseForm.apply)(CreatePurchaseForm.unapply)
   }
 
-  case class CreatePurchaseForm(name: String, user_id: Int, product_id: Int, date: String, amount: Int)
+
+  def getAll = Action.async { implicit request =>
+    purchasesRepo.list().map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
+
+  def getById(id: Int) = Action.async { implicit  request =>
+    purchasesRepo.getByID(id).map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
+
+  def add = Action.async { implicit request =>
+
+    purchaseForm.bindFromRequest.fold(
+      errorForm => {
+        Future.successful(
+          Ok("Error add purchase")
+        )
+      },
+      purchase => {
+        purchasesRepo.create(purchase.user_id, purchase.product_id,
+          purchase.date, purchase.amount).map { _ =>
+          Redirect(routes.ProductController.index).flashing("success" -> "product.created")
+        }
+      }
+    )
+  }
+
+
+  def update(id: Long) = Action { Ok("") }
+
+
+  def handlePost = Action.async { implicit request =>
+    val user_id = request.body.asJson.get("user_id").as[Int]
+    val product_id = request.body.asJson.get("product_id").as[Int]
+    val date = request.body.asJson.get("date").as[String]
+    val amount = request.body.asJson.get("amount").as[Int]
+
+
+    purchasesRepo.create(user_id, product_id, date, amount).map { purchase =>
+      Ok(Json.toJson(purchase))
+    }
+  }
+
+}
+
+case class CreatePurchaseForm(name: String, user_id: Int, product_id: Int, date: String, amount: Int)
 
 
 class SaleController @Inject()(salesRepo: SaleRepository,
@@ -218,13 +256,21 @@ class SaleController @Inject()(salesRepo: SaleRepository,
   }
 
 
-  def getAll = Action { Ok("") }
+  def getAll = Action.async { implicit request =>
+    salesRepo.list().map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def getById(id: Integer) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit  request =>
+    salesRepo.getByID(id).map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
   def add = Action { Ok("") }
 
-  def update(id: Integer) = Action { Ok("") }
+  def update(id: Long) = Action { Ok("") }
 
 
   def handlePost = Action.async { implicit request =>
@@ -260,17 +306,39 @@ class AdminController @Inject()(adminsRepo: AdminRepository,
   }
 
 
-  def getAll = Action { Ok("") }
+  def getAll = Action.async { implicit request =>
+    adminsRepo.list().map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def getById(id: Integer) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit  request =>
+    adminsRepo.getByID(id).map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def add = Action { Ok("") }
+
+
+  def register = Action.async { implicit request =>
+
+    adminForm.bindFromRequest.fold(
+      errorForm => {
+        Future.successful(
+          Ok("Error add admin")
+        )
+      },
+      product => {
+        adminsRepo.create(product.name).map { _ =>
+          Redirect(routes.ProductController.index).flashing("success" -> "admin.created")
+        }
+      }
+    )
+  }
 
   def login = Action { Ok("") }
 
-  def register = Action { Ok("") }
-
-  def update(id: Integer) = Action { Ok("") }
+  def update(id: Long) = Action { Ok("") }
 
 
   def handlePost = Action.async { implicit request =>
@@ -310,14 +378,39 @@ class UserController @Inject()(usersRepo: UserRepository,
   }
 
 
-  def getAll = Action { Ok("") }
+  def getAll = Action.async { implicit request =>
+    usersRepo.list().map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def getById(id: Integer) = Action { Ok("") }
+  def getById(id: Int) = Action.async { implicit  request =>
+    usersRepo.getByID(id).map { products =>
+      Ok(Json.toJson(products))
+    }
+  }
 
-  def register = Action { Ok("") }
+  def register = Action.async { implicit request =>
+
+    userForm.bindFromRequest.fold(
+      errorForm => {
+        Future.successful(
+          Ok("Error register user")
+        )
+      },
+      p => {
+        usersRepo.create(p.name, p.email, p.phone, p.postal, p.country, p.city,
+          p.street, p.home_number, p.flat_number).map { _ =>
+          Redirect(routes.ProductController.index).flashing("success" -> "user.created")
+        }
+      }
+    )
+  }
+
+
   def login = Action { Ok("") }
 
-  def update(id: Integer) = Action { Ok("") }
+  def update(id: Long) = Action { Ok("") }
 
 
   def handlePost = Action.async { implicit request =>
@@ -332,7 +425,8 @@ class UserController @Inject()(usersRepo: UserRepository,
     val flat_number = request.body.asJson.get("flat_number").as[Int]
 
 
-    usersRepo.create(name, email, phone, postal, country, city, street, home_number,flat_number).map { user =>
+    usersRepo.create(name, email, phone, postal, country,
+      city, street, home_number,flat_number).map { user =>
       Ok(Json.toJson(user))
     }
   }

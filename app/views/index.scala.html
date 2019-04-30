@@ -25,4 +25,63 @@
 			<input type="submit" value="Add Product"/>
 		</div>
 	}
+
+
+	@form(routes.CategoryController.add()) {
+		@inputText(product("name"))
+		@inputText(product("description"))
+
+		<div class="buttons">
+			<input type="submit" value="Add CategoryController"/>
+		</div>
+	}
+
+	@form(routes.PurchaseController.add()) {
+		@inputText(product("name"))
+		@inputText(product("user_id"))
+		@inputText(product("product_id"))
+		@inputText(product("date"))
+		@inputText(product("amount"))
+
+		<div class="buttons">
+			<input type="submit" value="Add PurchaseController"/>
+		</div>
+	}
+
+	@form(routes.SaleController.add()) {
+		@inputText(product("name"))
+		@inputText(product("product_id"))
+		@inputText(product("price"))
+		@inputText(product("start"))
+		@inputText(product("end"))
+		@inputText(product("amount"))
+
+		<div class="buttons">
+			<input type="submit" value="Add SaleController"/>
+		</div>
+	}
+
+	@form(routes.AdminController.register()) {
+		@inputText(product("name"))
+
+		<div class="buttons">
+			<input type="submit" value="Add AdminController"/>
+		</div>
+	}
+
+	@form(routes.UserController.register()) {
+		@inputText(product("name"))
+		@inputText(product("email"))
+		@inputText(product("phone"))
+		@inputText(product("postal"))
+		@inputText(product("country"))
+		@inputText(product("city"))
+		@inputText(product("street"))
+		@inputText(product("home_number"))
+		@inputText(product("flat_number"))
+
+		<div class="buttons">
+			<input type="submit" value="Add UserController"/>
+		</div>
+	}
 }

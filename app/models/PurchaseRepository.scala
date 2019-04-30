@@ -51,13 +51,8 @@ class PurchaseRepository @Inject() (dbConfigProvider: DatabaseConfigProvider,
     purchaseTable.result
   }
 
-//  def getByProduct(product_id: Int): Future[Seq[Purchase]] = db.run {
-//    purchaseTable.filter(_.product === product_id).result
-//  }
-//
-//  def getByProducts(product_ids: List[Int]): Future[Seq[Purchase]] = db.run {
-//    purchaseTable.filter(_.product inSet product_ids).result
-//  }
-
+  def getByID(id: Long): Future[Seq[Purchase]] = db.run {
+    purchaseTable.filter(_.id === id).result
+  }
 
 }

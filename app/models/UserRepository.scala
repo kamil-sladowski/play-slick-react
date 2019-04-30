@@ -45,5 +45,8 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
     userTable.result
   }
 
+  def getByID(id: Long): Future[Seq[User]] = db.run {
+    userTable.filter(_.id === id).result
+  }
 
 }

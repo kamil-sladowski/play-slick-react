@@ -41,5 +41,8 @@ class SaleRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
     saleTable.result
   }
 
+  def getByID(id: Long): Future[Seq[Sale]] = db.run {
+    saleTable.filter(_.id === id).result
+  }
 
 }

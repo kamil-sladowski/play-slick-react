@@ -37,5 +37,9 @@ class AdminRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(impli
     adminTable.result
   }
 
+  def getByID(id: Long): Future[Seq[Admin]] = db.run {
+    adminTable.filter(_.id === id).result
+  }
+
 
 }
